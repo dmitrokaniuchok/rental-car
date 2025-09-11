@@ -25,6 +25,9 @@ const carsSlice = createSlice({
     error: null,
   },
   reducers: {
+    setFilters: (state, action) => {
+      state.filters = { ...state.filters, ...action.payload };
+    },
     clearCurrentItem: (state) => {
       state.currentCar = null;
     },
@@ -44,8 +47,17 @@ const carsSlice = createSlice({
       .addCase(getAllCars.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
+
         const { cars, page, totalPages, totalCars } = action.payload;
-        state.cars = page === 1 ? cars : [...state.cars, ...cars];
+
+        if (page === 1) {
+          state.cars = cars;
+        } else {
+          const existingIds = new Set(state.cars.map((car) => car.id));
+          const newCars = cars.filter((car) => !existingIds.has(car.id));
+          state.cars = [...state.cars, ...newCars];
+        }
+
         state.currentPage = page;
         state.totalPages = totalPages;
         state.totalCars = totalCars;
@@ -61,5 +73,6 @@ const carsSlice = createSlice({
   },
 });
 
-export const carsActions = carsSlice.actions;
+export const { setFilters, clearCurrentItem, clearFilters, clearSearchParams } =
+  carsSlice.actions;
 export default carsSlice.reducer;

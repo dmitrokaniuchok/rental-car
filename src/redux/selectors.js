@@ -1,7 +1,7 @@
 export const selectCars = (state) => state.cars.cars;
 export const selectCurrentCar = (state) => state.cars.currentCar;
 export const selectFavorites = (state) => state.cars.favorites;
-export const selectFilters = (state) => state.cars.filter;
+export const selectFilters = (state) => state.cars.filters;
 export const selectTotalCars = (state) => state.cars.totalCars;
 export const selectCurrentPage = (state) => state.cars.currentPage;
 export const selectTotalPages = (state) => state.cars.totalPages;
