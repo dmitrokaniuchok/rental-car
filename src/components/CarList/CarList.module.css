@@ -1,0 +1,16 @@
+.carsList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 32px;
+  row-gap: 48px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 120px;
+}
+
+.carsItem {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}

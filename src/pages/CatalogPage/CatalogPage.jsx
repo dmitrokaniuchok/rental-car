@@ -1,13 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCars } from "../../redux/operations.js";
+import { clearSearchParams } from "../../redux/slice.js";
 import {
   selectCars,
   selectFilters,
   selectTotalCars,
+  selectIsLoading,
 } from "../../redux/selectors.js";
-import SearchBar from "../../components/SearchBar/SearchBar.jsx";
-import CarCard from "../../components/CarCard/CarCard.jsx";
+import SearchBox from "../../components/SearchBar/SearchBar.jsx";
+import CardList from "../../components/CarList/CarList.jsx";
+import Loader from "../../components/Loader/Loader.jsx";
 import css from "./CatalogPage.module.css";
 
 export default function CatalogPage() {
@@ -15,41 +18,46 @@ export default function CatalogPage() {
   const cars = useSelector(selectCars);
   const filters = useSelector(selectFilters);
   const totalCars = useSelector(selectTotalCars);
+  const isLoading = useSelector(selectIsLoading);
+
+  const [loadingMore, setLoadingMore] = useState(false);
 
   const brands = Array.from(new Set(cars.map((c) => c.brand)));
   const priceOptions = Array.from(
     new Set(cars.map((c) => Number(c.rentalPrice)))
   ).sort((a, b) => a - b);
-  console.log(cars.map((c) => c.id));
 
+  // Початкове завантаження або при зміні фільтрів
   useEffect(() => {
-    dispatch(getAllCars({ page: 1, limit: 12 }));
-  }, [dispatch]);
+    dispatch(clearSearchParams());
+    dispatch(getAllCars({ page: 1, limit: 12, ...filters }));
+  }, [dispatch, filters]);
+
+  // Завантаження наступної сторінки
+  const handleLoadMore = () => {
+    const nextPage = Math.ceil(cars.length / 12) + 1;
+    setLoadingMore(true);
+    dispatch(getAllCars({ page: nextPage, limit: 12, ...filters })).finally(
+      () => setLoadingMore(false)
+    );
+  };
 
   return (
     <div className={css.catalogContainer}>
-      <SearchBar brands={brands} priceOptions={priceOptions} />
+      <SearchBox brands={brands} priceOptions={priceOptions} />
 
-      <div className={css.carsGrid}>
-        {cars.map((car, index) => (
-          <CarCard key={`${car.id}-${index}`} car={car} />
-        ))}
+      <div className={css.cardsWrapper}>
+        {isLoading && cars.length === 0 ? <Loader /> : <CardList />}
       </div>
 
-      {cars.length < totalCars && (
+      {cars.length > 0 && cars.length < totalCars && (
         <button
+          type="button"
           className={css.loadMore}
-          onClick={() =>
-            dispatch(
-              getAllCars({
-                page: Math.ceil(cars.length / 12) + 1,
-                limit: 12,
-                ...filters,
-              })
-            )
-          }
+          onClick={handleLoadMore}
+          disabled={loadingMore}
         >
-          Load More
+          {loadingMore ? "Loading..." : "Load More"}
         </button>
       )}
     </div>

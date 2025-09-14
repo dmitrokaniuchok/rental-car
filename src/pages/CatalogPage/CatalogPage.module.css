@@ -1,0 +1,31 @@
+.loadMore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 156px;
+  height: 44px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 125%;
+  color: #101828;
+  border: 1px solid #3470ff;
+  border-radius: 12px;
+  padding: 12px 36px;
+  transition: background-color 0.5s ease-in;
+  margin: 80px auto 124px auto;
+}
+
+.loadMore:hover,
+.loadMore:focus {
+  background-color: #2554cc;
+  color: #fff;
+  border-color: #2554cc;
+}
+
+.cardsWrapper {
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

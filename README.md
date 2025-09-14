@@ -1,12 +1,47 @@
-# React + Vite
+# Rental Car App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Опис
 
-Currently, two official plugins are available:
+Веб-додаток для оренди автомобілів. Користувач може:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- переглядати каталог авто
+- фільтрувати автомобілі за параметрами
+- додавати до обраного
+- переглядати деталі автомобіля
+- робити бронювання через форму
 
-## Expanding the ESLint configuration
+## Функціональні можливості
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Перехід на каталог
+
+- Кнопка **"View Catalog"** на головній сторінці веде на сторінку каталогу автомобілів.
+
+### Фільтрація транспортних засобів
+
+- Виконується на бекенді
+- Можна фільтрувати за брендом, ціною та пробігом
+
+### Обране
+
+- Користувач може додавати автомобілі до списку обраного
+- Список зберігається при оновленні сторінки
+
+### Перехід на сторінку деталей авто
+
+- Через кнопку **"Read more"** на картці авто
+
+### Довантаження карток
+
+- Кнопка **"Load More"** підвантажує додаткові автомобілі
+- Пагінація виконується на бекенді
+
+### Форма бронювання автомобіля
+
+- Заповнення: ім’я, email, дата бронювання, коментар
+- Після успішної відправки форми відображається нотифікація про успішне бронювання
+
+## Автор
+
+**Dmytro Kaniuchok**  
+Email: kanyuchekdmitry@gmail.com  
+GitHub: [dmitrokaniuchok](https://github.com/dmitrokaniuchok)

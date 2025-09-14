@@ -16,7 +16,7 @@ const carsSlice = createSlice({
   initialState: {
     cars: [],
     currentCar: null,
-    favorites: [],
+    favorites: JSON.parse(localStorage.getItem("favorites")) || [],
     filters: {},
     totalCars: 0,
     currentPage: 1,
@@ -39,6 +39,15 @@ const carsSlice = createSlice({
       state.currentPage = 1;
       state.totalPages = 1;
       state.totalCars = 0;
+    },
+    toggleFavorite: (state, action) => {
+      const carId = action.payload;
+      if (state.favorites.includes(carId)) {
+        state.favorites = state.favorites.filter((id) => id !== carId);
+      } else {
+        state.favorites.push(carId);
+      }
+      localStorage.setItem("favorites", JSON.stringify(state.favorites));
     },
   },
   extraReducers: (builder) => {
@@ -73,6 +82,11 @@ const carsSlice = createSlice({
   },
 });
 
-export const { setFilters, clearCurrentItem, clearFilters, clearSearchParams } =
-  carsSlice.actions;
+export const {
+  setFilters,
+  clearCurrentItem,
+  clearFilters,
+  clearSearchParams,
+  toggleFavorite,
+} = carsSlice.actions;
 export default carsSlice.reducer;
